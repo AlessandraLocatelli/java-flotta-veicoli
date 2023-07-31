@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GestoreFlotta {
 
-    private ArrayList<Veicoli> veicolo = new ArrayList<>();
+    private ArrayList<Veicoli> veicoli = new ArrayList<>();
     private int contatoreAutomobile;
     private int contatoreMotocicletta;
 
@@ -13,7 +13,7 @@ public class GestoreFlotta {
 
 
     public ArrayList<Veicoli> getVeicolo() {
-        return veicolo;
+        return veicoli;
     }
 
     public int getContatoreAutomobile() {
@@ -30,7 +30,7 @@ public class GestoreFlotta {
         contatoreAutomobile = 0;
         contatoreMotocicletta = 0;
 
-        for (Veicoli veicolo : veicolo )
+        for (Veicoli veicolo : veicoli)
         {
             System.out.println(veicolo);
             if(veicolo instanceof Automobile)
@@ -48,16 +48,17 @@ public class GestoreFlotta {
 
         boolean trovato = false;
 
-        for (Veicoli veicolo : veicolo )
+        for (Veicoli veicolo : veicoli)
         {
             if(veicolo.getTarga().equals(numeroTarga))
+                System.out.println(veicolo);
                 trovato = true;
                 break;
 
         }
 
         if(trovato)
-            System.out.println("Veicolo trovato: "+veicolo);
+            System.out.println("Veicolo trovato!");
         else if(!trovato)
             System.out.println("Veicolo non trovato.");
 
@@ -67,4 +68,22 @@ public class GestoreFlotta {
 
     }
 
-}
+    //BONUS
+    public void controlloNumeriDiTarga() throws Exception
+    {
+
+       for (int i = 1; i < veicoli.size(); i++)
+       {
+           if(veicoli.get(i).getTarga().equals(veicoli.get(i-1).getTarga())){
+               veicoli.remove(veicoli.get(i));
+           throw new Exception("I veicoli non possono avere lo stesso numero di targa!" +
+                   " Rimuovo il veicolo dalla lista.");
+           }
+       }
+
+    }
+
+
+
+
+   }

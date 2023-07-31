@@ -30,7 +30,16 @@ public class Main {
                        System.out.println("Inserisci numero porte: ");
                        int numeroPorteInput = Integer.parseInt(sc.nextLine());
                        Automobile automobile = new Automobile(targaInput,annoImmatricolazioneInput,numeroPorteInput);
-                       gestoreFlotta.getVeicolo().add(automobile);
+                       try {
+                           gestoreFlotta.getVeicolo().add(automobile);
+                           gestoreFlotta.controlloNumeriDiTarga();
+                       }
+                       catch(Exception e)
+                       {
+                           System.out.println(e.getMessage());
+
+
+                       }
                    }
                    else if (sceltaVeicolo.equals("2"))
                    {
@@ -38,7 +47,15 @@ public class Main {
                        String haIlCavallettoStringa = sc.nextLine();
                        boolean haIlCavallettoInput = haIlCavallettoStringa.equalsIgnoreCase("s");
                        Motocicletta motocicletta = new Motocicletta(targaInput,annoImmatricolazioneInput,haIlCavallettoInput);
-                       gestoreFlotta.getVeicolo().add(motocicletta);
+                       try {
+                           gestoreFlotta.getVeicolo().add(motocicletta);
+                           gestoreFlotta.controlloNumeriDiTarga();
+                       }
+                       catch(Exception e)
+                       {
+                           System.out.println(e.getMessage());
+
+                       }
 
                    }
                    else
