@@ -31,8 +31,7 @@ public class Main {
                        int numeroPorteInput = Integer.parseInt(sc.nextLine());
                        Automobile automobile = new Automobile(targaInput,annoImmatricolazioneInput,numeroPorteInput);
                        try {
-                           gestoreFlotta.getVeicolo().add(automobile);
-                           gestoreFlotta.controlloNumeriDiTarga();
+                           gestoreFlotta.aggiungiVeicolo(automobile);
                        }
                        catch(Exception e)
                        {
@@ -48,8 +47,7 @@ public class Main {
                        boolean haIlCavallettoInput = haIlCavallettoStringa.equalsIgnoreCase("s");
                        Motocicletta motocicletta = new Motocicletta(targaInput,annoImmatricolazioneInput,haIlCavallettoInput);
                        try {
-                           gestoreFlotta.getVeicolo().add(motocicletta);
-                           gestoreFlotta.controlloNumeriDiTarga();
+                           gestoreFlotta.aggiungiVeicolo(motocicletta);
                        }
                        catch(Exception e)
                        {

@@ -69,21 +69,17 @@ public class GestoreFlotta {
     }
 
     //BONUS
-    public void controlloNumeriDiTarga() throws Exception
+    public void aggiungiVeicolo(Veicoli v) throws Exception
     {
 
-       for (int i = 1; i < veicoli.size(); i++)
-       {
-           if(veicoli.get(i).getTarga().equals(veicoli.get(i-1).getTarga())){
-               veicoli.remove(veicoli.get(i));
-           throw new Exception("I veicoli non possono avere lo stesso numero di targa!" +
-                   " Rimuovo il veicolo dalla lista.");
-           }
-       }
+        for (Veicoli veicolo : veicoli)
+        {
+            if(veicolo.getTarga().equals(v.getTarga()))
+                throw new Exception("Non puoi aggiungere veicoli con la stessa targa!");
 
+        }
+
+         veicoli.add(v);
     }
 
-
-
-
-   }
+}
