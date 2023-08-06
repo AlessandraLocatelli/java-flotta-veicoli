@@ -1,85 +1,95 @@
 package org.java.veicoli;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class GestoreFlotta {
 
-    private ArrayList<Veicoli> veicoli = new ArrayList<>();
-    private int contatoreAutomobile;
-    private int contatoreMotocicletta;
+    List<Veicolo> veicoliLista;
 
+    public GestoreFlotta() {
 
-    //METODI
+        veicoliLista = new ArrayList<>();
 
-
-    public ArrayList<Veicoli> getVeicolo() {
-        return veicoli;
     }
 
-    public int getContatoreAutomobile() {
-        return contatoreAutomobile;
+
+    public List<Veicolo> getVeicoliLista() {
+        return veicoliLista;
     }
 
-    public int getContatoreMotocicletta() {
-        return contatoreMotocicletta;
-    }
 
-    public void contaQuantiVeicoliStessaTipologia()
+    public void aggiungiVeicolo(Veicolo v) throws RuntimeException
+
     {
+          String targa = v.getNumTarga();
 
-        contatoreAutomobile = 0;
-        contatoreMotocicletta = 0;
+          if(trovaVeicoloTramiteTarga(targa) != null)
+          {
+              throw new RuntimeException("Veicolo già presente");
+          }
 
-        for (Veicoli veicolo : veicoli)
+            veicoliLista.add(v);
+
+    }
+
+
+    public int contaVeicoliPerTipo(String tipoVeicolo) throws IllegalArgumentException
+    {
+        int contatore = 0;
+
+        if(!tipoVeicolo.equalsIgnoreCase("automobile") && !tipoVeicolo.equalsIgnoreCase("motocicletta"))
         {
-            System.out.println(veicolo);
-            if(veicolo instanceof Automobile)
-                contatoreAutomobile ++;
-            if(veicolo instanceof Motocicletta)
-                contatoreMotocicletta++;
+            throw new IllegalArgumentException("Tipo di veicolo non presente");
 
         }
 
-
-    }
-
-    public boolean trovaVeicoloTramiteNumeroTarga(String numeroTarga)
-    {
-
-        boolean trovato = false;
-
-        for (Veicoli veicolo : veicoli)
+        for(Veicolo v : veicoliLista){
+        switch (tipoVeicolo)
         {
-            if(veicolo.getTarga().equals(numeroTarga))
-                System.out.println(veicolo);
-                trovato = true;
+            case "automobile":
+                if(v instanceof Automobile)
+                    contatore++;
                 break;
-
+            case "motocicletta":
+                if(v instanceof Motocicletta)
+                    contatore++;
+                break;
+            default:
+                break;
+        }
         }
 
-        if(trovato)
-            System.out.println("Veicolo trovato!");
-        else if(!trovato)
-            System.out.println("Veicolo non trovato.");
-
-
-        return  trovato;
-
-
+        return contatore++;
     }
 
-    //BONUS
-    public void aggiungiVeicolo(Veicoli v) throws Exception
-    {
 
-        for (Veicoli veicolo : veicoli)
-        {
-            if(veicolo.getTarga().equals(v.getTarga()))
-                throw new Exception("Non puoi aggiungere veicoli con la stessa targa!");
+   public Veicolo trovaVeicoloTramiteTarga(String numTargaUtente)
+   {
 
-        }
+       Veicolo veicoloCercato = null;
+       boolean trovato = false;
+       int contatore = 0;
 
-         veicoli.add(v);
-    }
+       while(!trovato && contatore < veicoliLista.size())
+       {
+           if(numTargaUtente.equals(veicoliLista.get(contatore).getNumTarga()))
+           {
+               veicoloCercato = veicoliLista.get(contatore);
+
+           }
+
+
+           contatore++;
+       }
+       return veicoloCercato;
+
+   }
+
+
+
+
 
 }
+

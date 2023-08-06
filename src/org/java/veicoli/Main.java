@@ -1,90 +1,164 @@
 package org.java.veicoli;
 
+
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
-       GestoreFlotta gestoreFlotta = new GestoreFlotta();
-       boolean esci = false;
-
-       while (!esci) {
-           System.out.println("Vuoi aggiungere un nuovo veicolo alla tua flotta? (s/n)");
-           String sceltaUtente = sc.nextLine();
-
-           switch (sceltaUtente)
-           {
-               case "s":
-                   System.out.println("Quale veicolo vuoi aggiungere? 1.automobile 2.motocicletta");
-                   String sceltaVeicolo = sc.nextLine();
-
-                   System.out.println("Inserisci targa: ");
-                   String targaInput = sc.nextLine();
-                   System.out.println("Inserisci anno di immatricolazione: ");
-                   int annoImmatricolazioneInput = Integer.parseInt(sc.nextLine());
+        GestoreFlotta gestoreFlotta = new GestoreFlotta();
 
 
-                   if(sceltaVeicolo.equals("1"))
-                   {
-                       System.out.println("Inserisci numero porte: ");
-                       int numeroPorteInput = Integer.parseInt(sc.nextLine());
-                       Automobile automobile = new Automobile(targaInput,annoImmatricolazioneInput,numeroPorteInput);
-                       try {
-                           gestoreFlotta.aggiungiVeicolo(automobile);
-                       }
-                       catch(Exception e)
-                       {
-                           System.out.println(e.getMessage());
+        boolean running = true;
+
+        while (running)
+        {
+            System.out.println("Vuoi aggiungere nuovi veicoli? (y/n)");
+            String sceltaUtente = sc.nextLine();
+
+            if(sceltaUtente.equalsIgnoreCase("y")) {
+
+                System.out.println("Quale veicolo? 1. automobile, 2. motocicletta");
+                String sceltaVeicolo = sc.nextLine();
+
+                String numTargaInput = null;
+                int annoImmatricolazioneInput = 0;
+
+                if(sceltaVeicolo.equals("1") || sceltaVeicolo.equals("2")){
+                try {
+                    System.out.println("Numero targa: ");
+                    numTargaInput = sc.nextLine();
+                    System.out.println("Anno di immatricolazione: ");
+                    annoImmatricolazioneInput = Integer.parseInt(sc.nextLine());
+                } catch (NumberFormatException e) {
+                    System.out.println("Formato non valido per l'anno. Inserisci dei numeri!");
+                }
+                }
+
+                switch (sceltaVeicolo)
+                {
+                    case "1":
+                        int numeroPorteInput = 0;
+                        Automobile automobile = null;
+
+                        try{
+                            System.out.println("Numero porte: ");
+                            numeroPorteInput = Integer.parseInt(sc.nextLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Parametri non validi per numero di porte. Inserisci dei numeri.");
+                        }
+                        catch (IllegalArgumentException e)
+                        {
+                            System.out.println("Parametri non validi per numero di porte.");
+                        }
+
+                        try{
+                            automobile = new Automobile(numTargaInput,annoImmatricolazioneInput,numeroPorteInput);
+                            gestoreFlotta.aggiungiVeicolo(automobile);
+
+                        }
+                        catch (NullPointerException e)
+                        {
+                            System.out.println(e.getMessage());
+
+                        }
+                        catch (IllegalArgumentException e)
+                        {
+                            System.out.println(e.getMessage());
+
+                        }
+                        catch (RuntimeException e)
+                        {
+                            System.out.println("Errore inserimento targa.");
+                            System.out.println(e.getMessage());
+
+                        }
+                        break;
+
+                    case "2":
+
+                        System.out.println("Ha il cavalletto?(y/n)");
+                        String conIlCavallettoStringa = sc.nextLine();
+                        boolean conIlCavalletto = conIlCavallettoStringa.equalsIgnoreCase("y");
+
+                        try{
+                        Motocicletta motocicletta = new Motocicletta(numTargaInput,annoImmatricolazioneInput,conIlCavalletto);
+                        gestoreFlotta.aggiungiVeicolo(motocicletta);
+                        }
+                        catch (NullPointerException e)
+                        {
+                            System.out.println("Parametri non validi per targa.");
+                            System.out.println(e.getMessage());
+
+                        }
+                        catch (IllegalArgumentException e)
+                        {
+                            System.out.println("Parametri non validi per anno immatricolazione.");
+                            System.out.println(e.getMessage());
+
+                        }
+                        catch (RuntimeException e)
+                        {
+                            System.out.println("Errore inserimento targa.");
+                            System.out.println(e.getMessage());
+
+                        }
+                        break;
+
+                    default:
+                        System.out.println("Digita 1 0 2.");
+                        break;
+                }
+
+            }
+            else if(sceltaUtente.equalsIgnoreCase("n"))
+            {
+                break;
+
+            }
+            else
+            {
+
+                System.out.println("Scelta non valida.");
+            }
+
+        }
+
+        System.out.println("I tuoi veicoli: "+gestoreFlotta.getVeicoliLista());
 
 
-                       }
-                   }
-                   else if (sceltaVeicolo.equals("2"))
-                   {
-                       System.out.println("Ha il cavalletto? (s/n)");
-                       String haIlCavallettoStringa = sc.nextLine();
-                       boolean haIlCavallettoInput = haIlCavallettoStringa.equalsIgnoreCase("s");
-                       Motocicletta motocicletta = new Motocicletta(targaInput,annoImmatricolazioneInput,haIlCavallettoInput);
-                       try {
-                           gestoreFlotta.aggiungiVeicolo(motocicletta);
-                       }
-                       catch(Exception e)
-                       {
-                           System.out.println(e.getMessage());
 
-                       }
+        System.out.println("---CONTA VEICOLI---");
+        System.out.println("Scegli il tipo di veicolo che vuoi contare: ");
+        String sceltaVeicolo = sc.nextLine();
+        try{
+        System.out.println(gestoreFlotta.contaVeicoliPerTipo(sceltaVeicolo));
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e.getMessage());
+        }
 
-                   }
-                   else
-                   {
-                       System.out.println("Scelta non valida.");
-                   }
-                   break;
-
-               case "n":
-                   esci = true;
-                   break;
-
-               default:
-                   System.out.println("Scelta non valida.");
-                   break;
-
-           }
-       }
+        System.out.println("---CERCA VEICOLO TRAMITE TARGA---");
+        System.out.println("Inserisci la targa: ");
+        String sceltaTarga = sc.nextLine();
+        System.out.println(gestoreFlotta.trovaVeicoloTramiteTarga(sceltaTarga));
 
 
-       System.out.println("Stampo la tua flotta");
-       gestoreFlotta.contaQuantiVeicoliStessaTipologia();
-        System.out.println("Numero automobili: "+gestoreFlotta.getContatoreAutomobile());
-        System.out.println("Numero motociclette: "+gestoreFlotta.getContatoreMotocicletta());
 
-        System.out.println("Cerchi un veicolo? Inserisci il numero della sua targa:");
-        String numeroTargaInput = sc.nextLine();
-        gestoreFlotta.trovaVeicoloTramiteNumeroTarga(numeroTargaInput);
+        System.out.println("A PRESTO!");
 
 
-       sc.close();
+        sc.close();
+
+
     }
+
+
+
 
 }

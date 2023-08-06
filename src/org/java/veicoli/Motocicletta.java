@@ -1,35 +1,40 @@
 package org.java.veicoli;
 
-public class Motocicletta extends Veicoli {
+public class Motocicletta extends Veicolo {
 
-    //CAMPI
-    private boolean ConIlCavalletto;
+   private boolean conCavalletto;
 
-     //COSTRUTTORE
-    public Motocicletta(String targa, int annoImmatricolazione, boolean ConIlCavalletto) {
-        super(targa, annoImmatricolazione);
-        this.ConIlCavalletto = ConIlCavalletto;
+
+    public Motocicletta(String numTarga, int annoImmatricolazione, boolean conCavalletto) {
+        super(numTarga, annoImmatricolazione);
+        this.conCavalletto = conCavalletto;
     }
 
-   //METODI
 
-
-    public boolean isConIlCavalletto() {
-        return ConIlCavalletto;
+    public boolean isConCavalletto() {
+        return conCavalletto;
     }
 
-    private String isConIlCavallettoStringa()
+
+    private String isConCavallettoStringa()
     {
-        return  isConIlCavalletto()? "con cavalletto" : "senza cavalletto";
+        return isConCavalletto()? "con cavalletto" : "senza cavalletto";
+
     }
+
+
 
 
     @Override
     public String toString() {
-        return "Motocicletta{" +
-                " targa=" + getTarga()+
-                " anno di immatricolazione=" +getAnnoImmatricolazione()+ " Cavalletto: "+
-                isConIlCavallettoStringa()+
-                '}';
+
+        return super.toString()+" ,cavalletto= "+isConCavallettoStringa();
+
+
+
     }
+
+
+
 }
+

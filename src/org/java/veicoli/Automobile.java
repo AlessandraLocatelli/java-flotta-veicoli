@@ -1,30 +1,27 @@
 package org.java.veicoli;
 
-public class Automobile extends Veicoli {
+public class Automobile extends Veicolo {
 
-    //CAMPI
-    private int porte;
+   private int numeroPorte;
 
-    //COSTRUTTORE
-    public Automobile(String targa, int annoImmatricolazione, int porte) {
-        super(targa, annoImmatricolazione);
-        this.porte = porte;
+    public Automobile(String numTarga, int annoImmatricolazione, int numeroPorte)
+    {
+        super(numTarga, annoImmatricolazione);
+
+        if(numeroPorte < 1 || numeroPorte > 6)
+        {throw new IllegalArgumentException("Inserisci numero di porte tra 1-6.");}
+        this.numeroPorte = numeroPorte;
+
     }
 
 
-    //METODI
-
-
-    public int getPorte() {
-        return porte;
+    public int getNumeroPorte() {
+        return numeroPorte;
     }
 
     @Override
     public String toString() {
-        return "Automobile{" +
-                " targa=" + getTarga()+
-                " anno di immatricolazione=" +getAnnoImmatricolazione()+
-                " porte=" + porte +
-                '}';
+        return  super.toString()+
+                " ,numeroPorte=" + numeroPorte;
     }
 }
